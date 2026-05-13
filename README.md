@@ -10,8 +10,8 @@ I implemented four classic Artificial Intelligence search strategies to compare 
 
 * **Breadth-First Search (BFS)**: Explores all neighbors at the current depth before moving deeper. It's guaranteed to find the shortest path in an unweighted maze.
 * **Depth-First Search (DFS)**: Goes as deep as possible down one path before backtracking. It uses less memory than BFS but doesn't always find the shortest path.
-* **A* Search**: An "informed" search that uses a heuristic (Manhattan Distance) to estimate how far it is from the goal. This helps it find the path much faster by prioritizing promising directions.
-* **Iterative Deepening A* (IDA*): Combines the low memory usage of DFS with the guided search of A* by gradually increasing the allowed "cost limit".
+* **A\* Search**: An "informed" search that uses a heuristic (Manhattan Distance) to estimate how far it is from the goal. This helps it find the path much faster by prioritizing promising directions.
+* **Iterative Deepening A\* (IDA\*)**: Combines the low memory usage of DFS with the guided search of A* by gradually increasing the allowed "cost limit".
 
 ---
 
