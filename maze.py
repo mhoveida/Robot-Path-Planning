@@ -1,21 +1,14 @@
 __author__ = "[Maddison Hoveida]"
 __email__ = "[mh4572@columbia.edu]"
-#======================================================================#
-#*#*#*# Optional: Import any allowed libraries you may need here #*#*#*#
-#======================================================================#
 import resource
 import time
 import heapq
-#=================================#
-#*#*#*# Your code ends here #*#*#*#
-#=================================#
-
 import argparse
 from collections import deque
 from heapq import heappush
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Robot Path Planning | HW 1 | COMS 4701')
+	parser = argparse.ArgumentParser(description='Robot Path Planning')
 	parser.add_argument('-bfs', action="store_true", default=False , help="Run BFS on the map")
 	parser.add_argument('-dfs', action="store_true", default=False, help= "Run DFS on the map")
 	parser.add_argument('-astar', action="store_true", default=False, help="Run A* on the map")
@@ -63,34 +56,22 @@ class MazeState:
 		Returns the start index of the maze based on the given arena
 		returns (-1, -1) if no start index found
 		'''
-		#=======================================================================#
-		#*#*#*# TODO: Write your code to find the start index of the maze #*#*#*#
-		#=======================================================================#
 		for row in range(len(arena)):
 			for col in range(len(arena[row])):
 				if arena[row][col] == "s":
 					return (row, col)
 		return -1,-1
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 
 	def get_goal_index(self):
 		'''
 		Returns the goal index of the maze based on the given arena
 		returns (-1, -1) if no goal index found
 		'''
-		#======================================================================#
-		#*#*#*# TODO: Write your code to find the goal index of the maze #*#*#*#
-		#======================================================================#
 		for row in range(len(arena)):
 			for col in range(len(arena[row])):
 				if arena[row][col] == "g":
 					return (row, col)
 		return -1,-1
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 
 	def __init__(self, arena, parent=None, action='Start', cost=0, current_position=(-1,-1)):
 
@@ -117,18 +98,11 @@ class MazeState:
 		If up is a valid move, returns a child in which the player has moved up
 		Else returns None.
 		'''
-		
-		#=================================================================#
-		#*#*#*# TODO: Write your code to move up in the puzzle here #*#*#*#
-		#=================================================================#
 		if  self.current_position[0] >0 and self.arena[self.current_position[0]-1][self.current_position[1]] != "o":
 			updated_position = (self.current_position[0]-1, self.current_position[1])
 			return MazeState(self.arena, self, 'Up', self.cost+1, updated_position)
 		else:
 			return None
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 
 
 	def move_down(self):
@@ -138,17 +112,11 @@ class MazeState:
 		Else returns None.
 		'''
 		
-		#===================================================================#
-		#*#*#*# TODO: Write your code to move down in the puzzle here #*#*#*#
-		#===================================================================#
 		if self.current_position[0] < len(self.arena)-1 and self.arena[self.current_position[0] + 1][self.current_position[1]] != "o":
 			updated_position = (self.current_position[0] + 1, self.current_position[1])
 			return MazeState(self.arena, self, 'Down', self.cost+1, updated_position)
 		else:
 			return None
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 
 	def move_left(self):
 		'''
@@ -157,17 +125,11 @@ class MazeState:
 		Else returns None.
 		'''
 		
-		#===================================================================#
-		#*#*#*# TODO: Write your code to move left in the puzzle here #*#*#*#
-		#===================================================================#
 		if self.current_position[1] > 0 and self.arena[self.current_position[0]][self.current_position[1]-1] != "o":
 			updated_position = (self.current_position[0], self.current_position[1]-1)
 			return MazeState(self.arena, self, 'Left', self.cost+1, updated_position)
 		else:
 			return None
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 
 
 	def move_right(self):
@@ -177,17 +139,11 @@ class MazeState:
 		Else returns None.
 		'''
 		
-		#====================================================================#
-		#*#*#*# TODO: Write your code to move right in the puzzle here #*#*#*#
-		#====================================================================#
 		if self.current_position[1] < len(self.arena[0])-1 and self.arena[self.current_position[0]][self.current_position[1] + 1] != "o":
 			updated_position = (self.current_position[0], self.current_position[1] + 1)
 			return MazeState(self.arena, self, 'Right', self.cost+1, updated_position)
 		else:
 			return None
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 
 	def expand(self):
 		""" 
@@ -208,15 +164,9 @@ class MazeState:
 		Maze states hashed based on cost. 
 		This function may be modified if required.
 		'''
-		#============================================================================================#
-		#*#*#*# Optional: May be modified if your algorithm requires a different hash function #*#*#*#
-		#============================================================================================#
 		
 		return self.current_position[0]*len(self.arena[0])+self.current_position[1]
 		
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
 	def __lt__(self, other):
 		return (self.cost + self.manhattan_distance()) < (other.cost + other.manhattan_distance())
 
@@ -225,10 +175,6 @@ class MazeState:
 		Maze states are defined as equal if they have the same dimensions and the same current position. 
 		This function may be modified if required.
 		'''
-		
-		#=============================================================================================#
-		#*#*#*# Optional: May be modified if your algorithm requires a different equality check #*#*#*#
-		#=============================================================================================#
 		
 		m1 = self.arena
 		m2 = other.arena
@@ -241,14 +187,6 @@ class MazeState:
 				return False
 
 		return self.current_position == other.current_position
-		
-		#=================================#
-		#*#*#*# Your code ends here #*#*#*#
-		#=================================#
-		
-	#=====================================================================================#
-	#*#*#*# Optional: Write any other functions you may need in the MazeState Class #*#*#*#
-	#=====================================================================================#
 	
 	def is_goal(self):
 		return self.current_position == self.goal
@@ -265,16 +203,6 @@ class MazeState:
 			grandparent = grandparent.parent
 		return False #No cycle
 
-
-#=================================#
-	#*#*#*# Your code ends here #*#*#*#
-	#=================================#
-
-
-
-#================================================================================#
-#*#*#*# Optional: You may write helper functions in this space if required #*#*#*#
-#================================================================================#
 
 def mark_star(arena, position):
 	if arena[position[0]][position[1]] == 's' or arena[position[0]][position[1]] == 'g':
@@ -322,18 +250,12 @@ def depth_limited_search(current_state, limit):
 			max_nodes_stored = max(len(frontier) + len(explored), max_nodes_stored)
 	return [], limit, -1, -1, -1# Replace with return values
 
-#=================================#
-#*#*#*# Your code ends here #*#*#*#
-#=================================#
 '''
 This function runs Breadth First Search on the input arena (which is a list of str)
 Returns a tuple of length 7 as described in the pdf spec
 '''
 def bfs(arena):
 
-	#=================================================#
-	#*#*#*# TODO: Write your BFS algorithm here #*#*#*#
-	#=================================================#
 	nodes_expanded = 0
 	max_search_depth = 0
 
@@ -369,19 +291,12 @@ def bfs(arena):
 
 
 	return [], -1, -1, -1, -1, -1, -1 # Replace with return values
-	#=================================#
-	#*#*#*# Your code ends here #*#*#*#
-	#=================================#
 
 '''
 This function runs Depth First Search on the input arena (which is a list of str)
 Returns a tuple of length 7 as described in the pdf spec
 '''
 def dfs(arena):
-
-	#=================================================#
-	#*#*#*# TODO: Write your DFS algorithm here #*#*#*#
-	#=================================================#
 	nodes_expanded = 0
 	max_search_depth = 0
 
@@ -420,19 +335,12 @@ def dfs(arena):
 		max_nodes_stored = max(len(frontier) + len(explored), max_nodes_stored)
 
 	return [], -1, -1, -1, -1, -1, -1 # Replace with return values
-	#=================================#
-	#*#*#*# Your code ends here #*#*#*#
-	#=================================#
 
 '''
 This function runs A* Search on the input arena (which is a list of str)
 Returns a tuple of length 7 as described in the pdf spec
 '''
 def astar(arena):
-
-	#================================================#
-	#*#*#*# TODO: Write your A* algorithm here #*#*#*#
-	#================================================#
 
 	nodes_expanded = 0
 	max_search_depth = 0
@@ -476,9 +384,6 @@ def astar(arena):
 		max_nodes_stored = max(len(frontier) + len(explored), max_nodes_stored)
 
 	return [], -1, -1, -1, -1, -1, -1 # Replace with return values
-	#=================================#
-	#*#*#*# Your code ends here #*#*#*#
-	#=================================#
 	
 '''
 This function runs Iterative Deepening A* Search on the input arena (which is a list of str)
@@ -500,13 +405,7 @@ def ida(arena):
 			return updated_arena, result, updated_node_expanded, max_nodes_stored, max_search_depth, running_time, max_ram_usage
 		limit +=1
 
-	#=================================================#
-	#*#*#*# TODO: Write your IDA algorithm here #*#*#*#
-	#=================================================#
 	return [], -1, -1, -1, -1, -1, -1
-	#=================================#
-	#*#*#*# Your code ends here #*#*#*#
-	#=================================#
 
 if __name__ == "__main__":
 	if results.bfs:
